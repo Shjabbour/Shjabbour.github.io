@@ -1,0 +1,122 @@
+:root {
+  --bg: #090b0f;
+  --text: #f3eee6;
+  --muted: #a5b0bc;
+  --line: rgba(243, 238, 230, 0.1);
+  --accent: #84efc4;
+  --accent-warm: #ff9c70;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: #090b0f;
+  color: var(--text);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 58px 64px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(132, 239, 196, 0.16), transparent 24%),
+    radial-gradient(circle at 82% 20%, rgba(255, 156, 112, 0.16), transparent 20%),
+    linear-gradient(180deg, #0a0d10 0%, #090b0f 100%);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(243, 238, 230, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 238, 230, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.3));
+}
+
+.orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(64px);
+  opacity: 0.22;
+}
+
+.orb-a {
+  top: -60px;
+  left: -50px;
+  width: 320px;
+  height: 320px;
+  background: rgba(132, 239, 196, 0.72);
+}
+
+.orb-b {
+  right: -90px;
+  bottom: -70px;
+  width: 360px;
+  height: 360px;
+  background: rgba(255, 156, 112, 0.48);
+}
+
+.eyebrow,
+.footer {
+  position: relative;
+  z-index: 1;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 18px;
+}
+
+h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 40px 0 0;
+  font-family: "Syne", "Trebuchet MS", sans-serif;
+  font-size: 80px;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.summary {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 28px;
+  line-height: 1.45;
+}
+
+.footer {
+  position: absolute;
+  right: 64px;
+  bottom: 52px;
+  left: 64px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.footer span {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
