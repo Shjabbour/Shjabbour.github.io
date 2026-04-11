@@ -24,6 +24,7 @@ Notes:
 - The machine running `pnpm dev` still needs an internet connection.
 - Cloudflare removes the need to be on the same Wi-Fi or to open ports on your router.
 - The public URL is printed in the terminal after the tunnel comes up.
+- The public URL is also copied to the clipboard, opened in your browser, and written to `current-tunnel-url.txt`.
 - If port `4173` is already taken, the dev server automatically moves to the next open port.
 
 ## Publish

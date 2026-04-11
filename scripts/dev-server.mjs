@@ -1,14 +1,17 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
 import http from "node:http";
 import net from "node:net";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 
 const rootDir = resolve(".");
 const args = new Set(process.argv.slice(2));
 const localOnly = args.has("--local");
 const host = process.env.HOST ?? "127.0.0.1";
 const requestedPort = Number.parseInt(process.env.PORT ?? "4173", 10);
+const tunnelUrlPath = join(rootDir, "current-tunnel-url.txt");
+const desktopDir = process.env.USERPROFILE ? join(process.env.USERPROFILE, "Desktop") : null;
+const desktopTunnelUrlPath = desktopDir ? join(desktopDir, "Shadi Portfolio Current Dev URL.txt") : null;
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -118,9 +121,47 @@ function shutdown(exitCode = 0) {
     cloudflaredProcess.kill();
   }
 
+  rmSync(tunnelUrlPath, { force: true });
+  if (desktopTunnelUrlPath) {
+    rmSync(desktopTunnelUrlPath, { force: true });
+  }
+
   server.close(() => {
     process.exit(exitCode);
   });
+}
+
+function persistPublicUrl(url) {
+  const body = `${url}\n`;
+  writeFileSync(tunnelUrlPath, body, "utf8");
+
+  if (desktopTunnelUrlPath) {
+    writeFileSync(desktopTunnelUrlPath, body, "utf8");
+  }
+}
+
+function copyToClipboard(url) {
+  if (process.platform !== "win32") {
+    return;
+  }
+
+  spawnSync("clip", {
+    input: url,
+    shell: true,
+    stdio: ["pipe", "ignore", "ignore"]
+  });
+}
+
+function openInBrowser(url) {
+  const command = process.platform === "win32" ? "cmd.exe" : "open";
+  const commandArgs =
+    process.platform === "win32" ? ["/c", "start", "", url] : [url];
+
+  spawn(command, commandArgs, {
+    detached: true,
+    stdio: "ignore",
+    shell: process.platform === "win32"
+  }).unref();
 }
 
 function startCloudflareTunnel() {
@@ -146,7 +187,17 @@ function startCloudflareTunnel() {
       const match = tunnelLog.match(/https:\/\/[-a-z0-9.]+trycloudflare\.com/iu);
       if (match) {
         publicUrlPrinted = true;
+        persistPublicUrl(match[0]);
+        copyToClipboard(match[0]);
+        openInBrowser(match[0]);
         console.log(`\nPublic URL: ${match[0]}`);
+        console.log(`Saved to ${tunnelUrlPath}`);
+        if (desktopTunnelUrlPath) {
+          console.log(`Saved to ${desktopTunnelUrlPath}`);
+        }
+        if (process.platform === "win32") {
+          console.log("Copied to clipboard and opened in your browser.");
+        }
       }
     }
 
