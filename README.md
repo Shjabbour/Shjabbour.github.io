@@ -15,5 +15,6 @@ Double-click `Open Portfolio.cmd`, or open `index.html` directly in a browser.
 
 ## Publish
 
-This repo is configured to deploy automatically to GitHub Pages on pushes to `main`.
+This repo is configured as a native GitHub Pages user site.
+Pushes to `main` deploy the site at `https://shjabbour.github.io/`.
 It can also be deployed to Netlify or Vercel without a build step.
