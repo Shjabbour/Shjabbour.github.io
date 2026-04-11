@@ -11,7 +11,7 @@ Standalone portfolio site for Shadi Jabbour.
 
 ## Local use
 
-Double-click `Open Portfolio.cmd`, or open `index.html` directly in a browser.
+Double-click `Open Portfolio.cmd` to open the live site, or open `index.html` directly in a browser.
 
 ## Dev server
 
