@@ -17,6 +17,8 @@ Double-click `Open Portfolio.cmd`, or open `index.html` directly in a browser.
 
 - `pnpm dev`: serves the site locally on `http://127.0.0.1:4173` and starts a temporary Cloudflare tunnel so the dev version is reachable from anywhere.
 - `pnpm dev:local`: serves the site locally without Cloudflare.
+- `Start Portfolio Tunnel.cmd`: one-click launcher for the Cloudflare-backed dev workflow.
+- `Start Portfolio Local Dev.cmd`: one-click launcher for local-only dev.
 
 Notes:
 - The machine running `pnpm dev` still needs an internet connection.
